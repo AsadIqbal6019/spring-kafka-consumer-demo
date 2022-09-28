@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    # url: jdbc:postgresql://localhost:5432/kafka_demo
+    url: jdbc:postgresql://${POSTGRES_SERVICE_NAME}:5432/${POSTGRES_DB_NAME}
+    password: ${POSTGRES_PASSWORD}
+    username: ${POSTGRES_USER}
+
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        generate-ddl: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    generate-ddl: true
+    ddl-auto: create-drop
+
+  kafka:
+    consumer:
+      bootstrap-servers: ${KAFKA_ENDPOINT}
+      group-id: group_id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    topic:
+      name: cloudflash
